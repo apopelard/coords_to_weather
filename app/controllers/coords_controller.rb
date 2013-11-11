@@ -20,13 +20,29 @@ class CoordsController < ApplicationController
     url = "https://api.forecast.io/forecast/#{your_api_key}/#{@latitude},#{@longitude}"
     raw_data = open(url).read
     parsed_data = JSON.parse(raw_data)
-    @temperature = parsed_data["currently"]["temperature"]
+
+    if parsed_data.has_key?("currently")
+      @temperature = parsed_data["currently"]["temperature"]
+    else
+      @temperature = "sorry there is no data available"
+    end
+
     if parsed_data.has_key?("minutely")
       @minutely_summary = parsed_data["minutely"]["summary"]
     else
-      @minutely_summary = "sorry there is no by the minute data"
+      @minutely_summary = "sorry there is no data available"
     end
-    @hourly_summary = parsed_data["hourly"]["summary"]
-    @daily_summary = parsed_data["daily"]["summary"]
+
+    if parsed_data.has_key?("hourly")
+      @hourly_summary = parsed_data["hourly"]["summary"]
+    else
+      @hourly_summary = "sorry there is no data available"
+    end
+
+    if parsed_data.has_key?("daily")
+      @daily_summary = parsed_data["daily"]["summary"]
+    else
+      @daily_summary = "sorry there is no data available"
+    end
   end
 end
