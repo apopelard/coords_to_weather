@@ -1,6 +1,15 @@
 <h1>Weather Lookup</h1>
 
+<form action="/weather">
+  <label id="address">Input your address</label>
+  <input type="text" name="address">
+  <input type="submit" value="Check the weather">
+</form>
+
 <dl>
+  <dt>Address:</dt>
+  <dd><%= @address %></dd>
+
   <dt>Latitude:</dt>
   <dd><%= @latitude %></dd>
 
