@@ -21,7 +21,11 @@ class CoordsController < ApplicationController
     raw_data = open(url).read
     parsed_data = JSON.parse(raw_data)
     @temperature = parsed_data["currently"]["temperature"]
-    @minutely_summary = parsed_data["minutely"]["summary"]
+    if parsed_data.has_key?("minutely")
+      @minutely_summary = parsed_data["minutely"]["summary"]
+    else
+      @minutely_summary = "sorry there is no by the minute data"
+    end
     @hourly_summary = parsed_data["hourly"]["summary"]
     @daily_summary = parsed_data["daily"]["summary"]
   end
